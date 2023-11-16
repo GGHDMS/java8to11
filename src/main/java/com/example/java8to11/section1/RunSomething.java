@@ -1,4 +1,4 @@
-package com.example.java8to11;
+package com.example.java8to11.section1;
 
 // 추상 메소드 하나면 함수형 인터페이스
 @FunctionalInterface
