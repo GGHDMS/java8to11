@@ -22,5 +22,37 @@ public class App {
                 c -> System.out.println(c.getStudyDuration())
         );
 
+        System.out.println("===============");
+
+        Optional<OnlineClass> optionalOnlineClass = springClasses.stream()
+                .filter(c -> c.getTitle().startsWith("spring"))
+                .findFirst();
+
+        boolean present = optionalOnlineClass.isPresent();
+        System.out.println(present);
+
+        if (optionalOnlineClass.isPresent()) {
+            OnlineClass onlineClass = optionalOnlineClass.get();
+            System.out.println(onlineClass.getTitle());
+        }
+
+        optionalOnlineClass.ifPresent(c -> System.out.println(c.getTitle()));
+
+        OnlineClass onlineClass = optionalOnlineClass.orElseGet(App::getNewClass);
+
+        System.out.println(onlineClass.getTitle());
+
+        Optional<Optional<Progress>> progress1 = optionalOnlineClass.map(OnlineClass::getProgress);
+        Optional<Progress> progress2 = optionalOnlineClass.flatMap(OnlineClass::getProgress);
+
     }
+
+    //orElse 는 무조건 실행 그렇기 때문에 orElse 는 상수를 return 할때 사용? 그럴 때 말고는 orElseGet
+    private static OnlineClass getNewClass() {
+        System.out.println("creating new online class");
+        return new OnlineClass(10, "New class", false);
+    }
+
+
 }
+
